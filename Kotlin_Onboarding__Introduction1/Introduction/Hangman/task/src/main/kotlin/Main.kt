@@ -1,18 +1,21 @@
+const val NEW_LINE: String = System.lineSeparator()
+const val DOT = '.'
+const val UNDERLINE = '_'
 fun printRules() {
     println(
         "Welcome to the game!\n" +
                 "\n" +
-                "In this game, you need to guess the word chosen by the computer.\n" +
-                "The hidden word will appear as a sequence of underscore characters, one per letter.\n" +
-                "You have $maxAttemptsCount attempts to guess the word.\n" +
-                "All words are English words, consisting of $wordLength letters.\n" +
-                "At each attempt, you should enter one letter; \n" +
-                "if it is present in the hidden word, all matches will be displayed.\n" +
-                "\n" +
-                "For example, if the word CAT was chosen by the computer, _ _ _ will be displayed first,\n" +
-                "since the word has 3 letters.\n" +
-                "If you enter the letter A, you will see _ A _, and so on.\n" +
-                "\n" +
+                "In this game, you need to guess the word chosen by the computer.${NEW_LINE}" +
+                "The hidden word will appear as a sequence of underscore characters, one per letter.${NEW_LINE}" +
+                "You have $maxAttemptsCount attempts to guess the word.${NEW_LINE}" +
+                "All words are English words, consisting of $wordLength letters.${NEW_LINE}" +
+                "At each attempt, you should enter one letter; ${NEW_LINE}" +
+                "if it is present in the hidden word, all matches will be displayed.${NEW_LINE}" +
+                "${NEW_LINE}" +
+                "For example, if the word CAT was chosen by the computer, _ _ _ will be displayed first,${NEW_LINE}" +
+                "since the word has 3 letters.${NEW_LINE}" +
+                "If you enter the letter A, you will see _ A _, and so on.${NEW_LINE}" +
+                "${NEW_LINE}" +
                 "Good luck with the game!"
     )
 }
@@ -72,11 +75,11 @@ fun safeUserInput(): Char {
 fun playGame(secret: String) {
     var complete = false
     var numOfAttempts = 0
-    var currentUserWord = "_".repeat(wordLength)
+    var currentUserWord = UNDERLINE.repeat(wordLength)
 
     while (!complete && (numOfAttempts < maxAttemptsCount)) {
         val guess = safeUserInput()
-        if (guess != '.') {
+        if (guess != DOT) {
             currentUserWord = generateNewUserWord(secret, guess, currentUserWord)
         }
         complete = isComplete(secret, currentUserWord)

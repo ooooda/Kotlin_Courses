@@ -1,3 +1,5 @@
+const val NEW_LINE: String = System.lineSeparator()
+
 fun main() {
     var firstUserAnswer = ""
     var secondUserAnswer = ""
@@ -11,8 +13,8 @@ fun main() {
         "Why are you learning Kotlin?"
     )
     print(
-        "Hello! I will ask you several questions.\n" +
-                "Please answer all of them and be honest with me!\n"
+        "Hello! I will ask you several questions.${NEW_LINE}" +
+                "Please answer all of them and be honest with me!${NEW_LINE}"
     )
     for (i in 1..3) {
         println(questions[i - 1])

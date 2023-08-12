@@ -14,18 +14,16 @@ object Utils {
     private val previousAttempts = mutableListOf<List<KeyCardCell>>()
 
     val uniqueKeyCardGenerator = KeyCardGenerator {
-        var newCards = false
-        var newList: MutableList<KeyCardCell>
+        var inPreviousAttempts: Boolean
+        var currentAttempt: List<KeyCardCell>
         do {
-            newList = KeyCardType.values().map { type ->
+            currentAttempt = KeyCardType.values().map { type ->
                 List(type.number) { KeyCardCell(type) }
-            }.flatten().shuffled().toMutableList()
-            if (!previousAttempts.contains(newList)) {
-                previousAttempts.add(newList.toMutableList())
-                newCards = true
-            }
-        } while (!newCards)
-        newList
+            }.flatten().shuffled()
+            inPreviousAttempts = currentAttempt in previousAttempts
+        } while (inPreviousAttempts)
+        previousAttempts.add(currentAttempt)
+        currentAttempt
     }
 
     init {

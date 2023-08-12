@@ -1,3 +1,5 @@
+const val NEW_LINE: String = System.lineSeparator()
+
 fun safeReadLine(): String {
     return readlnOrNull() ?: error("null value was received")
 }
@@ -6,7 +8,7 @@ fun checkSize(size: String): Boolean {
     return size.filterNot { it.isDigit() }.isEmpty()
 }
 
-fun getPatternHeight(pattern: String) = pattern.removeSuffix("\n").lines().size
+fun getPatternHeight(pattern: String) = pattern.removeSuffix(NEW_LINE).lines().size
 
 fun getSizes(param: String): Int {
     var correctInput: Boolean
@@ -62,6 +64,7 @@ fun applyGenerator(pattern: String, generatorName: String, width: Int, height: I
         "canvas" -> {
             canvasGenerator(pattern, width, height)
         }
+
         "canvasGaps" -> {
             canvasWithGapsGenerator(pattern, width, height)
         }
@@ -118,7 +121,7 @@ fun choosePattern(): String {
     var inputPattern: String
     var pattern: String?
     do {
-        println("Please, choose pattern.\nThe possible options: ${allPatterns()}")
+        println("Please, choose pattern.${NEW_LINE}The possible options: ${allPatterns()}")
         inputPattern = safeReadLine()
         pattern = getPatternByName(inputPattern)
         pattern?.let {
@@ -133,8 +136,8 @@ fun getPattern(): String {
     var correctInput = false
     var pattern = ""
     println(
-        "Do you want to use a pre-defined pattern or a custom one?\n" +
-                "Please input 'yes' for a pre-defined pattern or 'no' for a custom one."
+            "Do you want to use a pre-defined pattern or a custom one?${NEW_LINE}" +
+                    "Please input 'yes' for a pre-defined pattern or 'no' for a custom one."
     )
     do {
         chosenPattern = safeReadLine()
@@ -148,9 +151,10 @@ fun getPattern(): String {
                 correctInput = true
                 pattern = safeReadLine()
             }
+
             else -> {
                 println(
-                    "Please input 'yes' or 'no'"
+                        "Please input 'yes' or 'no'"
                 )
             }
         }

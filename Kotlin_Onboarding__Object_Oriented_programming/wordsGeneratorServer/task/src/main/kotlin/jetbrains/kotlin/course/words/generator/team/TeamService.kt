@@ -4,10 +4,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class TeamService {
-
     fun generateTeamsForOneRound(teamsNumber: Int): List<Team> {
         val teams = List(teamsNumber) { Team() }
-        teamsStorage.putAll(teams.associateBy { it.id })
+        teams.forEach { teamsStorage.putIfAbsent(it.id, it) }
         return teams
     }
 

@@ -1,5 +1,7 @@
+const val NEW_LINE: String = System.lineSeparator()
+
 fun getGameRules(wordLength: Int, maxAttemptsCount: Int, secretExample: String = "ACEB", alphabet: String): String {
-    return "Welcome to the game!\n\nTwo people play this game: " +
+    return "Welcome to the game!${NEW_LINE}${NEW_LINE}Two people play this game: " +
             "one chooses a word (a sequence of letters), the other guesses it. " +
             "In this version, the computer chooses the word: a sequence of $wordLength " +
             "letters (for example, $secretExample). " +
@@ -7,7 +9,7 @@ fun getGameRules(wordLength: Int, maxAttemptsCount: Int, secretExample: String =
             "(the max number is $maxAttemptsCount). " +
             "For each attempt, the number of complete matches (letter and position) " +
             "and partial matches (letter only) is reported. " +
-            "The possible symbols in the word: $alphabet. \n\nFor example, " +
+            "The possible symbols in the word: $alphabet. ${NEW_LINE}${NEW_LINE}For example, " +
             "with $secretExample as the hidden word, " +
             "the BCDF guess will give 1 full match (C) and 1 partial match (B)."
 }
@@ -17,13 +19,13 @@ fun generateSecret(wordLength: Int, alphabet: String): String {
 }
 
 fun countPartialMatches(secret: String, guess: String): Int {
-    require(secret.length == guess.length)
+    require(secret.length == guess.length) {"Different length"}
     return secret.filter { guess.contains(it) && guess.indexOf(it) != secret.indexOf(it) }.length
 
 }
 
 fun countExactMatches(secret: String, guess: String): Int {
-    require(secret.length == guess.length)
+    require(secret.length == guess.length) {"Different length"}
     return secret.filterIndexed { index, symbol -> symbol == guess[index] }.length
 }
 
@@ -47,9 +49,7 @@ fun playGame(wordLength: Int, maxAttemptsCount: Int, secret: String, alphabet: S
     }
 }
 
-fun isComplete(secret: String, guess: String): Boolean {
-    return secret == guess
-}
+fun isComplete(secret: String, guess: String): = secret == guess
 
 fun printRoundResults(secret: String, guess: String) {
     println(
@@ -73,7 +73,7 @@ fun isLoss(complete: Boolean, attempts: Int, maxAttemptsCount: Int): Boolean {
 fun safeUserInput(wordLength: Int, alphabet: String) {
     println(
         "Please input your guess. It should be of length $wordLength, " +
-                "and each symbol should be from the alphabet: $alphabet.\n"
+                "and each symbol should be from the alphabet: $alphabet.${NEW_LINE}"
     )
 }
 

@@ -1,3 +1,4 @@
+const val NEW_LINE: String = System.lineSeparator()
 fun trimPicture(picture: String): String {
     return picture.trimIndent()
 }
@@ -101,10 +102,10 @@ fun getPicture(): String {
 fun photoshop() {
     val picture = getPicture()
     val filter = chooseFilter()
-    println("The old image:\n$picture")
+    println("The old image: ${NEW_LINE}$picture")
     val trimmedPicture = trimPicture(picture)
     val transformedPicture = applyFilter(trimmedPicture, filter)
-    println("The transformed picture:\n$transformedPicture")
+    println("The transformed picture:${NEW_LINE}$transformedPicture")
 }
 
 fun main() {

@@ -10,6 +10,8 @@ class WordService {
         private val previousWords = mutableMapOf<String, MutableList<Word>>()
     }
 
+    private fun String.groupByLetters() = this.groupingBy { it }.eachCount()
+
     fun generateNextWord(): Word {
         require(words.isNotEmpty()) { "No words in the list" }
         return Word(words.removeFirst())
@@ -20,25 +22,22 @@ class WordService {
             return false
         }
 
-        val keywordFreq = keyWord.groupingBy { it }.eachCount()
-        val newWordFreq = newWord.groupingBy { it }.eachCount()
+        val keywordFreq = keyWord.groupByLetters()
+        val newWordFreq = newWord.groupByLetters()
 
         return newWordFreq.all { (symbol, count) ->
             keywordFreq[symbol]?.let { it >= count } ?: false
         }
     }
 
-    fun isNewWord(keyWord: String, newWord: String): Boolean {
-        if (!previousWords.containsKey(keyWord)) {
-            previousWords[keyWord] = mutableListOf(Word(newWord))
-            return true
+    > Anastasia Birillo:
+    fun isNewWord(keyWord: String, newWord: String) = previousWords.putIfAbsent(keyWord, mutableListOf(Word(newWord)))?.let { words ->
+        val word = Word(newWord)
+        (word !in words).also {
+            if (it) {
+                words.add(word)
+            }
         }
+    } ?: true
 
-        return if (previousWords[keyWord]?.contains(Word(newWord)) == true) {
-            false
-        } else {
-            previousWords[keyWord]?.add(Word(newWord))
-            true
-        }
-    }
 }
